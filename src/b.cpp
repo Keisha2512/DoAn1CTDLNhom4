@@ -33,7 +33,7 @@ void inDSDangKyLopTinChi(
          << setw(15) << "Trang thai"
          << '\n';
 
-    NodeDK* p = ltc.dsDK;
+    const NodeDK* p = ltc.dsDK;
 
     while (p != nullptr) {
         const NodeSV* sv = timSinhVienTrongDSLop(

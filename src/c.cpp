@@ -223,12 +223,54 @@ bool suaSVTrongLop(
 
     if (trung != nullptr && trung != cu) return false;
 
+    // API cu khong co DSLopTinChi de kiem tra lich su dang ky.
+    // Vi vay khong cho doi maSV qua API nay de tranh mat lien ket dang ky.
+    if (soSanhChuoi(maSV, sinhVienMoi.maSV) != 0) return false;
+
+    return suaSV(*lop, maSV, sinhVienMoi);
+}
+
+// Kiem tra ca dang ky hien hanh va cac ban ghi lich su da huy.
+static bool sinhVienCoLichSuDangKy(const DSLopTinChi& dsLTC, const char* maSV) {
+    if (maSV == nullptr || maSV[0] == '\0') return false;
+    for (int i = 0; i < dsLTC.soLuong; ++i) {
+        const LopTinChi* ltc = dsLTC.ds[i];
+        if (ltc == nullptr) continue;
+        for (const NodeDK* dk = ltc->dsDK; dk != nullptr; dk = dk->next) {
+            if (soSanhChuoi(dk->data.maSV, maSV) == 0) return true;
+        }
+    }
+    return false;
+}
+
+// Overload an toan: chi cho doi maSV neu sinh vien chua co bat ky lich su dang ky.
+bool suaSVTrongLop(DSLop& dsLop, const DSLopTinChi& dsLTC,
+                   const char* maLop, const char* maSV,
+                   const SinhVien& sinhVienMoi) {
+    if (maSV == nullptr || maSV[0] == '\0') return false;
+    if (!thongTinSinhVienHopLe(sinhVienMoi)) return false;
+
+    Lop* lop = timLop(dsLop, maLop);
+    if (lop == nullptr) return false;
+
+    NodeSV* cu = timSVTrongLop(lop->dsSV, maSV);
+    if (cu == nullptr) return false;
+
+    NodeSV* trung = timSV(dsLop, sinhVienMoi.maSV);
+    if (trung != nullptr && trung != cu) return false;
+
     if (soSanhChuoi(maSV, sinhVienMoi.maSV) != 0 &&
-        sinhVienCoDangKyChuaHuy(
-            *(DSLopTinChi*)nullptr, maSV
-        )) {
+        sinhVienCoLichSuDangKy(dsLTC, maSV)) {
         return false;
     }
 
     return suaSV(*lop, maSV, sinhVienMoi);
+}
+
+bool xoaSVKhoiLop(DSLop& dsLop, const DSLopTinChi& dsLTC,
+                  const char* maLop, const char* maSV) {
+    if (maSV == nullptr || maSV[0] == '\0') return false;
+    // Khong xoa ca SV da huy dang ky: ban ghi lich su van tham chieu maSV.
+    if (sinhVienCoLichSuDangKy(dsLTC, maSV)) return false;
+    return xoaSVKhoiLop(dsLop, maLop, maSV);
 }

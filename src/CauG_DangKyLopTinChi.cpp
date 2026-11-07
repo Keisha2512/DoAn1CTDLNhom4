@@ -145,6 +145,11 @@ bool dangKyLopTinChi(const DSLop& dsLop, DSLopTinChi& dsLTC,
     LopTinChi* ltc = timLopTinChi(dsLTC, maLTC);
     if (ltc == nullptr || !lopTinChiChoPhepDangKy(*ltc)) return false;
 
+    // Khong cho SV dang ky hai nhom cua cung mon trong cung hoc ky,
+    // ke ca truong hop dang ky cu o nhom hien tai da bi huy.
+    if (sinhVienDaDangKyMon(dsLTC, maSV, ltc->nienKhoa, ltc->hocKy, ltc->maMH))
+        return false;
+
     NodeDK* dkDaCo = timDangKy(ltc->dsDK, maSV);
     if (dkDaCo != nullptr) {
         // Dang ky dang hieu luc thi khong duoc dang ky lap.
@@ -156,9 +161,6 @@ bool dangKyLopTinChi(const DSLop& dsLop, DSLopTinChi& dsLTC,
         dkDaCo->data.diem = CHUA_CO_DIEM;
         return true;
     }
-
-    if (sinhVienDaDangKyMon(dsLTC, maSV, ltc->nienKhoa, ltc->hocKy, ltc->maMH))
-        return false;
 
     DangKy duLieu{};
     std::strncpy(duLieu.maSV, maSV, MAX_MASV - 1);

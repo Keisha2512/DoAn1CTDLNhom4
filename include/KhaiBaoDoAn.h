@@ -196,6 +196,13 @@ bool themSVVaoLop(DSLop& dsLop, const char* maLop, const SinhVien& sinhVien);
 bool xoaSVKhoiLop(DSLop& dsLop, const char* maLop, const char* maSV);
 bool suaSVTrongLop(DSLop& dsLop, const char* maLop, const char* maSV,
                    const SinhVien& sinhVienMoi);
+// Cac overload co DSLopTinChi de bao ve lich su dang ky khi xoa/doi maSV.
+// Khong xoa/doi maSV neu con bat ky ban ghi dang ky nao (ke ca ban ghi da huy).
+bool xoaSVKhoiLop(DSLop& dsLop, const DSLopTinChi& dsLTC,
+                  const char* maLop, const char* maSV);
+bool suaSVTrongLop(DSLop& dsLop, const DSLopTinChi& dsLTC,
+                   const char* maLop, const char* maSV,
+                   const SinhVien& sinhVienMoi);
 void inDSSVTheoMaSV(const DSLop& dsLop, const char* maLop);
 
 // Khong xoa SV neu con dang ky hop le/chua huy o lop tin chi.

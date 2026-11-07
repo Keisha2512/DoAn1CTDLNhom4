@@ -33,8 +33,8 @@ int huyCacLopKhongDuSiSo(DSLopTinChi& dsLTC,
             p = p->next;
         }
 
-        // Theo de bai: huy lop neu so SV dang ky < soSVMin.
-        if (soSVThucDangKy < ltc->soSVMin) {
+        // Khong tu dong huy lop da co diem thi hop le.
+        if (soSVThucDangKy < ltc->soSVMin && !lopTinChiDaThi(*ltc)) {
             ltc->huyLop = true;
             ++soLopDaHuy;
         }

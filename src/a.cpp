@@ -78,47 +78,7 @@ const LopTinChi* timLopTinChi(
     return nullptr;
 }
 
-int demSVDangKyHopLe(const LopTinChi& ltc) {
-    int dem = 0;
-    NodeDK* p = ltc.dsDK;
-
-    while (p != nullptr) {
-        if (!p->data.huyDangKy) dem++;
-        p = p->next;
-    }
-
-    return dem;
-}
-
-int soChoTrong(const LopTinChi& ltc) {
-    int choTrong = ltc.soSVMax - demSVDangKyHopLe(ltc);
-
-    if (choTrong < 0) return 0;
-    return choTrong;
-}
-
-bool lopTinChiDaThi(const LopTinChi& ltc) {
-    NodeDK* p = ltc.dsDK;
-
-    while (p != nullptr) {
-        if (p->data.diem != CHUA_CO_DIEM &&
-            diemHopLe(p->data.diem)) {
-            return true;
-        }
-
-        p = p->next;
-    }
-
-    return false;
-}
-
-bool lopTinChiChoPhepDangKy(const LopTinChi& ltc) {
-    if (ltc.huyLop) return false;
-    if (lopTinChiDaThi(ltc)) return false;
-    if (soChoTrong(ltc) <= 0) return false;
-
-    return true;
-}
+// Cac ham dem va kiem tra dang ky duoc dinh nghia duy nhat trong CauG_DangKyLopTinChi.cpp.
 
 bool themLopTinChi(
     DSLopTinChi& dsLTC,

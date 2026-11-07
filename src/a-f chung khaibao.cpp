@@ -15,6 +15,8 @@ bool chuoiRong(const char* text) {
 }
 
 int soSanhChuoi(const char* a, const char* b) {
+    if (a == nullptr) a = "";
+    if (b == nullptr) b = "";
     int i = 0;
 
     while (a[i] != '\0' && b[i] != '\0') {
@@ -36,6 +38,8 @@ static char doiChuThuong(char c) {
 int soSanhChuoiKhongPhanBietHoaThuong(
     const char* a, const char* b
 ) {
+    if (a == nullptr) a = "";
+    if (b == nullptr) b = "";
     int i = 0;
 
     while (a[i] != '\0' && b[i] != '\0') {
